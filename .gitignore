@@ -1,3 +1,4 @@
+dist/
 bin/
 build/
 output/
@@ -6,3 +7,5 @@ buildtest
 .DS_Store
 .settings
 .project
+.idea
+*.iml

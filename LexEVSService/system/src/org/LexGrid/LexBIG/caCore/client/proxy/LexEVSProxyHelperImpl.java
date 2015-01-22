@@ -11,15 +11,8 @@ package org.LexGrid.LexBIG.caCore.client.proxy;
 import gov.nih.nci.system.applicationservice.ApplicationService;
 import gov.nih.nci.system.client.proxy.BeanProxy;
 import gov.nih.nci.system.client.proxy.ProxyHelperImpl;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.LexGrid.LexBIG.caCore.applicationservice.RemoteExecutionResults;
+import org.LexGrid.LexBIG.caCore.applicationservice.RemoteInputStreamWrapper;
 import org.LexGrid.LexBIG.caCore.applicationservice.resource.RemoteShell;
 import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
 import org.LexGrid.LexBIG.caCore.utils.LexEVSCaCoreUtils;
@@ -31,6 +24,14 @@ import org.springframework.aop.framework.Advised;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.target.SingletonTargetSource;
+
+import java.io.ByteArrayInputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Object proxy implementation for EVS. Certain methods are overridden to
@@ -86,7 +87,14 @@ public class LexEVSProxyHelperImpl extends ProxyHelperImpl {
         
         	return pf.getProxy();
         }
-        
+
+        if(obj instanceof RemoteInputStreamWrapper){
+            RemoteInputStreamWrapper wrapper = (RemoteInputStreamWrapper) obj;
+
+            return new ByteArrayInputStream(wrapper.getBytes());
+        }
+
+
         if(obj instanceof Integer || obj instanceof Float || obj instanceof Double
                 || obj instanceof Character || obj instanceof Long || obj instanceof Boolean
                 || obj instanceof String || obj instanceof Date || obj instanceof LexEVSBeanProxy

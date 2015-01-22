@@ -8,12 +8,6 @@
 */
 package org.LexGrid.LexBIG.distributed.test.valueset;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-
 import org.LexGrid.LexBIG.DataModel.Collections.AbsoluteCodingSchemeVersionReferenceList;
 import org.LexGrid.LexBIG.DataModel.Collections.CodingSchemeRenderingList;
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
@@ -31,6 +25,12 @@ import org.LexGrid.valueSets.ValueSetDefinitionReference;
 import org.LexGrid.valueSets.types.DefinitionOperator;
 import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
 import org.lexgrid.valuesets.dto.ResolvedValueSetDefinition;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
 
 /**
  * The Class TestLexEVSValueSetDefinitionServices.
@@ -61,13 +61,13 @@ public class TestLexEVSValueSetDefinitionServices extends ServiceTestCase
     	}
     }
     
-    public void defertestExportVSResolutionByVSDObjectToWriter() throws LBException, URISyntaxException, IOException{
+    public void testExportVSResolutionByVSDObjectToWriter() throws LBException, URISyntaxException, IOException{
 		
 		ValueSetDefinition vsd = new ValueSetDefinition();
 		vsd.setValueSetDefinitionURI("SRITEST:AUTO:VSDREF_GM_IMMI_NODE_AND_FORD");
 		vsd.setValueSetDefinitionName("VSDREF_GM_IMMI_NODE_AND_FORD");
-		vsd.setDefaultCodingScheme("Automobiles");
-		vsd.setConceptDomain("Autos");
+		vsd.setDefaultCodingScheme("NCI_Thesaurus");
+		//vsd.setConceptDomain("Autos");
 		
 		DefinitionEntry de = new DefinitionEntry();
 		de.setRuleOrder(1L);
@@ -85,7 +85,7 @@ public class TestLexEVSValueSetDefinitionServices extends ServiceTestCase
 		
 		EntityReference entityRef = new EntityReference();
 		entityRef.setEntityCode("Explorer");
-		entityRef.setEntityCodeNamespace("Automobiles");
+		entityRef.setEntityCodeNamespace("NCI_Thesaurus");
 		entityRef.setLeafOnly(false);
 		entityRef.setTransitiveClosure(false);
 		de.setEntityReference(entityRef);

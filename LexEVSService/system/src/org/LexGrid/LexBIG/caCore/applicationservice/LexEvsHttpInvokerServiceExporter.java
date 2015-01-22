@@ -8,19 +8,14 @@
 */
 package org.LexGrid.LexBIG.caCore.applicationservice;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-
 import org.LexGrid.LexBIG.Impl.helpers.ResolvedConceptReferencesIteratorImpl;
 import org.LexGrid.LexBIG.caCore.applicationservice.resource.RemoteResourceManager;
+import org.apache.commons.io.IOUtils;
 import org.lexevs.locator.LexEvsServiceLocator;
 import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
 import org.springframework.remoting.rmi.CodebaseAwareObjectInputStream;
 
-import com.healthmarketscience.rmiio.SerializableInputStream;
+import java.io.*;
 
 /**
  * Ues the LexEVS Classloader (for loading extensions, SQL drivers, etc).
@@ -92,9 +87,9 @@ public class LexEvsHttpInvokerServiceExporter extends HttpInvokerServiceExporter
 			}
 			else if (obj instanceof InputStream){
 				final InputStream in = (InputStream) obj;
-				obj = new SerializableInputStream(in);
-//				obj = RemoteInputStreamServer.wrap(in);
+                obj = new RemoteInputStreamWrapper(IOUtils.toByteArray(in));
 			}
+
 			return super.replaceObject(obj);
 		}
 	}
